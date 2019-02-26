@@ -1,0 +1,49 @@
+management:
+  security:  
+    enabled: false    
+
+
+zuul:
+  prefix: /world/gateway
+  routes:
+    yerevan:
+      path: /yerevan/**
+    #  url: http://yerevan:2800 #without erueka
+      serviceId: YEREVAN       
+      # with eureka
+   
+            
+
+server:
+   port: 8079
+   tomcat:
+     max-http-post-size: 6291456
+
+spring:
+  application:
+    name: zuul
+  servlet:
+   multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+    
+
+yerevan:
+    ribbon:
+     ReadTimeout: 3000
+
+     
+eureka:
+  instance:  
+    leaseRenewalIntervalInSeconds: 10
+    prefer-ip-address: true
+    leaseExpirationDurationInSeconds: 3
+  client:
+    enabled: true
+    registryFetchIntervalSeconds: 5   
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
