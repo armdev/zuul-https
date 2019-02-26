@@ -3,21 +3,17 @@ management:
     enabled: false    
 
 
-zuul:
-  prefix: /world/gateway
-  routes:
-    yerevan:
-      path: /yerevan/**
-    #  url: http://yerevan:2800 #without erueka
-      serviceId: YEREVAN       
-      # with eureka
-   
-            
-
 server:
    port: 8079
+   ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/yerevan.p12
+    key-store-password: yerevan
+    key-alias: yerevan  
    tomcat:
      max-http-post-size: 6291456
+     
+
 
 spring:
   application:
@@ -27,13 +23,30 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
-    
 
+zuul:
+  prefix: /world/gateway
+  routes:
+    yerevan:
+      path: /yerevan/**   
+      serviceId: YEREVAN       
+      
+            
+#
+#    
+#
+#ribbon: 
+#  TrustStore: classpath:keystore/yerevan.p12
+#  TrustStorePassword : yerevan
+#  ReadTimeout: 60000
+#  IsSecure: true
+#  MaxAutoRetries: 10
+  
 yerevan:
-    ribbon:
-     ReadTimeout: 3000
-
-     
+   ribbon:
+     ReadTimeout: 30000
+  
+  
 eureka:
   instance:  
     leaseRenewalIntervalInSeconds: 10
